@@ -1,0 +1,11 @@
+﻿table_name_zh,序号,列名,中文名称,类型,空否,备注,table_name_en,说明解释,业务唯一性,表数据更新频率
+标准函数表,9,JSID,JSID,bigint,否,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,1,ID,ID,bigint,否,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,6,YPara,参数-Y,"decimal(9,6)",,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,2,FuncCode,函数代码,int,否,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,3,FuncName,函数名称,varchar(50),,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,7,FuncResult,输出结果,"decimal(9,6)",,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,4,ParaCode,参数代码,int,否,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,最后修改日期: 2017-04-19,null,null,null,null,null,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,5,XPara,参数-X,"decimal(9,6)",,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,
+标准函数表,8,UpdateTime,修改日期,datetime,否,,CT_Function,收录常用函数数值表数据，包括：标准正态分布函数数值表,内部专用,

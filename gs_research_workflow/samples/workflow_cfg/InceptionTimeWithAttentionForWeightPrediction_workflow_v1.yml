@@ -1,0 +1,239 @@
+- gs_research_workflow.time_series.gs_steps.tf_train_steps:TFTrainStep:
+    '#checkpoint_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:ModelCheckPointStep:
+        save_best_only: true
+        save_weights_only: false
+        verbose: 1
+    '#compile_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:CompileStep:
+        loss: mae
+        optimizer: Adam
+        str_metrics:
+        - mean_absolute_error
+        - mean_squared_error
+        - kullback_leibler_divergence
+    '#early_stopping_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:EarlyStoppingStep:
+        monitor: loss
+        patience: 3
+    '#fit_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:FitStep:
+        epochs: 5
+        steps_per_epoch: 20000
+        validation_steps: 300
+    '#model_init_hp,model_cls#':
+      PROPERTIES: model_init_hp,model_cls
+      gs_research_workflow.time_series.gs_steps.model_steps:TFModelStep:
+        model_cls_str: gs_research_workflow.time_series.models.inception_time_with_attention:InceptionTimeWithAttentionForWeightPrediction
+        model_hp:
+          gs_research_workflow.time_series.models.inception_time_with_attention:InceptionTimeWithAttentionForWeightPrediction.HP:
+            inception_attention_hp:
+              gs_research_workflow.time_series.models.inception_time_with_attention:InceptionTimeWithAttentionBlock.HP:
+                depth: 6
+                inception_block_hp:
+                  gs_research_workflow.time_series.models.inception_time:InceptionBlock.HP:
+                    stride: 1
+                    use_bottleneck: true
+                use_attention_after_residual: true
+                use_attention_at_each_inception: true
+                use_attention_at_input: true
+                use_residual: true
+    '#tensor_board_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:TensorBoardStep:
+        write_graph: false
+    '#test_ds#':
+      PROPERTIES: tf_ds
+      RULE: test_ds
+      gs_research_workflow.time_series.gs_steps.ts_portfolio_ds_steps:TSPortfolioWeightTFDSStep:
+        '#all_portfolio_callable#':
+          PROPERTIES: all_portfolio_callable
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-12-31
+            query_start_t: 2019-10-02
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: test_ds_pip
+        '#equity_ts_callable#':
+          PROPERTIES: symbol_ts_callable
+          RULE: equity_ts_callable
+          gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolMultipleTSStep:
+            '#apis_and_columns#':
+              PROPERTIES: val
+              RULE: apis_and_columns
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_features_per_symbol
+            '#data_query_class#':
+              PROPERTIES: val
+              RULE: data_query_class
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_feature_query_class
+        '#market_indicator#':
+          PROPERTIES: market_indicator
+          RULE: market_indicator
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-12-31
+            query_start_t: 2019-10-02
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        false_sample_ratio: 1.0
+        random_state: 100
+    '#train_ds#':
+      PROPERTIES: tf_ds
+      RULE: train_ds
+      gs_research_workflow.time_series.gs_steps.ts_portfolio_ds_steps:TSPortfolioWeightTFDSStep:
+        '#all_portfolio_callable#':
+          PROPERTIES: all_portfolio_callable
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-07-01
+            query_start_t: 2017-01-01
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: train_val_ds_pip
+        '#equity_ts_callable#':
+          PROPERTIES: symbol_ts_callable
+          RULE: equity_ts_callable
+          gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolMultipleTSStep:
+            '#apis_and_columns#':
+              PROPERTIES: val
+              RULE: apis_and_columns
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_features_per_symbol
+            '#data_query_class#':
+              PROPERTIES: val
+              RULE: data_query_class
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_feature_query_class
+        '#market_indicator#':
+          PROPERTIES: market_indicator
+          RULE: market_indicator
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-07-01
+            query_start_t: 2017-01-01
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        false_sample_ratio: 1.0
+        random_state: 100
+    '#val_ds#':
+      PROPERTIES: tf_ds
+      RULE: val_ds
+      gs_research_workflow.time_series.gs_steps.ts_portfolio_ds_steps:TSPortfolioWeightTFDSStep:
+        '#all_portfolio_callable#':
+          PROPERTIES: all_portfolio_callable
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-10-01
+            query_start_t: 2019-07-02
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: train_val_ds_pip
+        '#equity_ts_callable#':
+          PROPERTIES: symbol_ts_callable
+          RULE: equity_ts_callable
+          gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolMultipleTSStep:
+            '#apis_and_columns#':
+              PROPERTIES: val
+              RULE: apis_and_columns
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_features_per_symbol
+            '#data_query_class#':
+              PROPERTIES: val
+              RULE: data_query_class
+              gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                local_var_name: x_feature_query_class
+        '#market_indicator#':
+          PROPERTIES: market_indicator
+          RULE: market_indicator
+          gs_research_workflow.time_series.gs_steps.predefined_step_fields:TSPortfolioWeightInputStep:
+            query_end_t: 2019-10-01
+            query_start_t: 2019-07-02
+            use_csi_index: true
+            use_fund_in_exchange: true
+            use_fund_in_otc: true
+            use_ssh_index: true
+            use_szse_index: true
+        false_sample_ratio: 1.0
+        random_state: 100
+- CONTEXT:
+    LOCAL:
+      test_ds_pip: 'lambda ds: ds.batch(10)'
+      train_val_ds_pip: 'lambda ds: ds.repeat().batch(20)'
+      x_feature_query_class: gs_research_workflow.time_series.data.tushare_wrapper:TuShareProData
+      x_features_per_symbol:
+        equity_backward_adjust_daily: !!python/tuple
+        - backward_adj_
+        - - open
+          - high
+          - low
+          - close
+          - pre_close
+          - change
+          - pct_chg
+          - vol
+          - amount
+        equity_basic_daily: !!python/tuple
+        - fin_ind_
+        - - turnover_rate
+          - turnover_rate_f
+          - volume_ratio
+          - pe
+          - pe_ttm
+          - pb
+          - ps
+          - ps_ttm
+          - dv_ratio
+          - dv_ttm
+          - total_share
+          - free_share
+          - total_mv
+          - circ_mv
+        equity_moneyflow_daily: !!python/tuple
+        - moneyflow_
+        - - buy_sm_vol
+          - buy_sm_amount
+          - sell_sm_vol
+          - sell_sm_amount
+          - buy_md_vol
+          - buy_md_amount
+          - sell_md_vol
+          - sell_md_amount
+          - buy_lg_vol
+          - buy_lg_amount
+          - sell_lg_vol
+          - sell_lg_amount
+          - buy_elg_vol
+          - buy_elg_amount
+          - sell_elg_vol
+          - sell_elg_amount
+          - net_mf_vol
+          - net_mf_amount

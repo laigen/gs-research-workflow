@@ -1,0 +1,7 @@
+﻿table_name_zh,序号,列名,中文名称,类型,空否,备注,table_name_en,说明解释,业务唯一性,表数据更新频率
+CALDB_删除表,最后修改日期: 2017-04-19,null,null,null,null,null,CALDB_DeleteRec,记录各表删除记录的ID值,无,
+CALDB_删除表,1,TABLENAME,表名,varchar(50),否,,CALDB_DeleteRec,记录各表删除记录的ID值,无,
+CALDB_删除表,3,XGRQ,修改日期,datetime,否,,CALDB_DeleteRec,记录各表删除记录的ID值,无,
+CALDB_删除表,2,RECID,被删除表ID,bigint,否,,CALDB_DeleteRec,记录各表删除记录的ID值,无,
+CALDB_删除表,5,JSID,JSID,bigint,否,,CALDB_DeleteRec,记录各表删除记录的ID值,无,
+CALDB_删除表,4,ID,ID,bigint,否,,CALDB_DeleteRec,记录各表删除记录的ID值,无,

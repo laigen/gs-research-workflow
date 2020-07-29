@@ -1,0 +1,281 @@
+- gs_research_workflow.time_series.gs_steps.tf_train_steps:TFTrainStep:
+    '#checkpoint_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:ModelCheckPointStep:
+        save_best_only: true
+        verbose: 1
+    '#compile_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:CompileStep:
+        loss: categorical_crossentropy
+        optimizer: Adam
+        str_metrics:
+        - categorical_accuracy
+        - categorical_crossentropy
+        - categorical_hinge
+    '#early_stopping_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:EarlyStoppingStep:
+        monitor: loss
+        patience: 3
+    '#fit_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:FitStep:
+        epochs: 10
+        steps_per_epoch: 1000
+        validation_steps: 300
+    '#model_init_hp,model_cls#':
+      PROPERTIES: model_init_hp,model_cls
+      gs_research_workflow.time_series.gs_steps.model_steps:TFModelStep:
+        model_cls_str: gs_research_workflow.time_series.models.simple_lstm:SimpleLSTM
+        model_hp:
+          gs_research_workflow.time_series.models.simple_lstm:SimpleLSTM.HP:
+            l1_factor: 0.01
+            l2_factor: 0.01
+            lstm_units: 8
+            nb_classes: 3
+    '#tensor_board_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:TensorBoardStep:
+        write_graph: false
+    '#test_ds#':
+      PROPERTIES: tf_ds
+      RULE: test_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSCategoryDatasetPreparingStep:
+        '#category_labels#':
+          PROPERTIES: val
+          RULE: category_labels
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: category_labels
+        '#df_category_symbol_by_t#':
+          PROPERTIES: func_result
+          gs_research_workflow.time_series.gs_steps.func_steps:FuncStrStep:
+            '#single_input#':
+              PROPERTIES: ts_data
+              RULE: ts_process
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                '#symbols#':
+                  PROPERTIES: mapping_data
+                  RULE: symbols
+                  gs_research_workflow.time_series.gs_steps.data_structure_utility_steps:KeyValueListToMappingStep:
+                    '#key_list#':
+                      PROPERTIES: val
+                      RULE: key_list
+                      gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                        local_var_name: category_labels
+                    '#value_list#':
+                      PROPERTIES: val
+                      RULE: value_list
+                      gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                        local_var_name: category_by_index_membership
+                api: index_weight
+                cols:
+                - con_code
+                end_t: 2019-12-01
+                start_t: 2019-11-01
+            func_obj_str: gs_research_workflow.time_series.gs_steps.df_funcs:dfs_concat
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: test_ds_pip
+        '#x_get_data_callable#':
+          PROPERTIES: ts_callable_by_lookback
+          gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSPeriodTSByLookbackStep:
+            '#df_time_align#':
+              PROPERTIES: ts_data
+              RULE: time_align
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                api: index_quotation_daily
+                cols:
+                - close
+                symbols: 000001.SH
+            '#symbol_period_ts_callable#':
+              PROPERTIES: symbol_period_ts_callable
+              RULE: period_ts_callable
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                '#api#':
+                  PROPERTIES: val
+                  RULE: api
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_from_api
+                '#cols#':
+                  PROPERTIES: val
+                  RULE: cols
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_columns
+        export_symbol_in_ds: false
+        export_t_in_ds: false
+    '#train_ds#':
+      PROPERTIES: tf_ds
+      RULE: train_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSCategoryDatasetPreparingStep:
+        '#category_labels#':
+          PROPERTIES: val
+          RULE: category_labels
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: category_labels
+        '#df_category_symbol_by_t#':
+          PROPERTIES: train_set
+          RULE: train_set
+          gs_research_workflow.time_series.gs_steps.data_preprocess_steps:TrainValSpiltStep:
+            '#train_val_orig_data#':
+              PROPERTIES: func_result
+              RULE: train_val_orig_data
+              gs_research_workflow.time_series.gs_steps.func_steps:FuncStrStep:
+                '#single_input#':
+                  PROPERTIES: ts_data
+                  RULE: ts_process
+                  gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                    '#symbols#':
+                      PROPERTIES: mapping_data
+                      RULE: symbols
+                      gs_research_workflow.time_series.gs_steps.data_structure_utility_steps:KeyValueListToMappingStep:
+                        '#key_list#':
+                          PROPERTIES: val
+                          RULE: key_list
+                          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                            local_var_name: category_labels
+                        '#value_list#':
+                          PROPERTIES: val
+                          RULE: value_list
+                          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                            local_var_name: category_by_index_membership
+                    api: index_weight
+                    cols:
+                    - con_code
+                    end_t: 2019-10-31
+                    start_t: 2014-01-01
+                func_obj_str: gs_research_workflow.time_series.gs_steps.df_funcs:dfs_concat
+            random_state: 100
+            split_ratio: 0.85
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: train_val_ds_pip
+        '#x_get_data_callable#':
+          PROPERTIES: ts_callable_by_lookback
+          gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSPeriodTSByLookbackStep:
+            '#df_time_align#':
+              PROPERTIES: ts_data
+              RULE: time_align
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                api: index_quotation_daily
+                cols:
+                - close
+                symbols: 000001.SH
+            '#symbol_period_ts_callable#':
+              PROPERTIES: symbol_period_ts_callable
+              RULE: period_ts_callable
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                '#api#':
+                  PROPERTIES: val
+                  RULE: api
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_from_api
+                '#cols#':
+                  PROPERTIES: val
+                  RULE: cols
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_columns
+        export_symbol_in_ds: false
+        export_t_in_ds: false
+    '#val_ds#':
+      PROPERTIES: tf_ds
+      RULE: val_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSCategoryDatasetPreparingStep:
+        '#category_labels#':
+          PROPERTIES: val
+          RULE: category_labels
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: category_labels
+        '#df_category_symbol_by_t#':
+          PROPERTIES: val_set
+          RULE: val_set
+          gs_research_workflow.time_series.gs_steps.data_preprocess_steps:TrainValSpiltStep:
+            '#train_val_orig_data#':
+              PROPERTIES: func_result
+              RULE: train_val_orig_data
+              gs_research_workflow.time_series.gs_steps.func_steps:FuncStrStep:
+                '#single_input#':
+                  PROPERTIES: ts_data
+                  RULE: ts_process
+                  gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                    '#symbols#':
+                      PROPERTIES: mapping_data
+                      RULE: symbols
+                      gs_research_workflow.time_series.gs_steps.data_structure_utility_steps:KeyValueListToMappingStep:
+                        '#key_list#':
+                          PROPERTIES: val
+                          RULE: key_list
+                          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                            local_var_name: category_labels
+                        '#value_list#':
+                          PROPERTIES: val
+                          RULE: value_list
+                          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                            local_var_name: category_by_index_membership
+                    api: index_weight
+                    cols:
+                    - con_code
+                    end_t: 2019-10-31
+                    start_t: 2014-01-01
+                func_obj_str: gs_research_workflow.time_series.gs_steps.df_funcs:dfs_concat
+            random_state: 100
+            split_ratio: 0.85
+        '#ds_pip#':
+          PROPERTIES: val
+          RULE: ds_pip
+          gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+            local_var_name: train_val_ds_pip
+        '#x_get_data_callable#':
+          PROPERTIES: ts_callable_by_lookback
+          gs_research_workflow.time_series.gs_steps.tf_dataset_step:TSPeriodTSByLookbackStep:
+            '#df_time_align#':
+              PROPERTIES: ts_data
+              RULE: time_align
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                api: index_quotation_daily
+                cols:
+                - close
+                symbols: 000001.SH
+            '#symbol_period_ts_callable#':
+              PROPERTIES: symbol_period_ts_callable
+              RULE: period_ts_callable
+              gs_research_workflow.time_series.gs_steps.ts_data_steps:SymbolTSStep:
+                '#api#':
+                  PROPERTIES: val
+                  RULE: api
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_from_api
+                '#cols#':
+                  PROPERTIES: val
+                  RULE: cols
+                  gs_research_workflow.time_series.gs_steps.local_context_step:GetContextStep:
+                    local_var_name: x_feature_columns
+        export_symbol_in_ds: false
+        export_t_in_ds: false
+- CONTEXT:
+    LOCAL:
+      category_by_index_membership:
+      - 000043.SH
+      - 000044.SH
+      - 000045.SH
+      category_labels:
+      - BigCap
+      - MidCap
+      - SmlCap
+      test_ds_pip: 'lambda ds: ds.batch(10)'
+      train_val_ds_pip: 'lambda ds: ds.repeat().batch(20)'
+      x_feature_columns:
+      - open
+      - high
+      - low
+      - close
+      - pre_close
+      - change
+      - pct_chg
+      - vol
+      - amount
+      x_feature_from_api: equity_backward_adjust_daily

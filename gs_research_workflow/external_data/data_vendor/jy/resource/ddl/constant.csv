@@ -1,0 +1,121 @@
+﻿table_name_zh,table_name_en,序号,列名,中文名称,类型,空否,备注,说明解释,业务唯一性,表数据更新频率
+JYDB_删除表,JYDB_DeleteRec,1,TABLENAME,表名,varchar(100),否,,本表记录各表删除记录的ID值,无,不定时更新
+JYDB_删除表,JYDB_DeleteRec,2,RECID,被删除表ID,bigint,否,,本表记录各表删除记录的ID值,无,不定时更新
+JYDB_删除表,JYDB_DeleteRec,3,XGRQ,修改日期,datetime,否,,本表记录各表删除记录的ID值,无,不定时更新
+JYDB_删除表,JYDB_DeleteRec,4,ID,ID,bigint,否,,本表记录各表删除记录的ID值,无,不定时更新
+JYDB_删除表,JYDB_DeleteRec,5,JSID,JSID,bigint,否,,本表记录各表删除记录的ID值,无,不定时更新
+JYDB_删除表,JYDB_DeleteRec,最后修改日期: 2017-04-19,,,,,,本表记录各表删除记录的ID值,无,不定时更新
+交易日表(新),QT_TradingDayNew,1,ID,ID,bigint,否,,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,2,TradingDate,日期,datetime,否,,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,3,IfTradingDay,是否交易日,int,,是否交易日（IfTradingDay），该字段固定以下常量：1-是，2-否。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,4,SecuMarket,证券市场,int,,证券市场(SecuMarket)与(CT_SystemConst)表中的DM字段关联，令LB = 201，得到证券市场的具体描述：71-柜台交易市场，72-香港联交所，77-美国纳斯达克证券交易所，83-上海证券交易所，85-伦敦证券交易所，89-银行间债券市场。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,5,IfWeekEnd,是否周最后交易日,int,,是否周最后交易日（IfWeekEnd），该字段固定以下常量：1-是，2-否。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,6,IfMonthEnd,是否月最后交易日,int,,是否月最后交易日（IfMonthEnd），该字段固定以下常量：1-是，2-否。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,7,IfQuarterEnd,是否季最后交易日,int,,是否季最后交易日（IfQuarterEnd），该字段固定以下常量：1-是，2-否。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,8,IfYearEnd,是否年最后交易日,int,,是否年最后交易日（IfYearEnd），该字段固定以下常量：1-是，2-否。,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,9,XGRQ,更新时间,datetime,否,,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,10,JSID,JSID,bigint,否,,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+交易日表(新),QT_TradingDayNew,最后修改日期: 2017-04-19,,,,,,本表收录各个市场的交易日信息，包括每个日期是否是交易日，是否周、月、季、年最后一个交易日,"TradingDate,SecuMarket",不定时更新
+产品表,CT_Product,1,ID,ID,bigint,否,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,2,ProductCategory,产品分类,varchar(30),否,产品分类(ProductCategory)与(CT_SystemConst)表中的DM字段关联，令LB = 2，得到产品分类的具体描述：10-内部编码，11-公司代码，205-证券信托公司，206-省市表，301-行业表，311-临时公告关键词，312-非公告关键词，313-法律法规关键词，314-研究报告关键词，315-数据解读关键词，316-专题关键词，...,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,3,ProductName,产品名称,varchar(50),否,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,4,ProductCode,产品代码,varchar(20),否,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,5,IndustryCode,所属行业代码,char(20),,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,6,XGRQ,更新时间,datetime,否,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,7,JSID,JSID,bigint,否,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+产品表,CT_Product,最后修改日期: 2017-04-19,,,,,,本表收录各种产品名称、代码、分类以及所属行业的情况。,"ProductCategory,ProductCode",不定时更新
+人员表,CT_Personal,1,ID,ID,bigint,否,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,2,InfoPublDate,信息发布日期,datetime,,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,3,InfoSource,信息来源,varchar(50),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,4,PersonalType,类别所属类别,int,,类别所属类别(PersonalType)与(CT_SystemConst)表中的DM字段关联，令LB = 1366，得到类别所属类别的具体描述：10-基金管理，20-机构研究，30-证监会从属机构委员。,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,5,PersonalNum,人员编号,int,否,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,6,PersonalName,姓名,varchar(100),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,7,WorkPlace,单位名称,varchar(200),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,8,CompanyCode,在任单位公司编号,int,,在任单位公司编号（CompanyCode）：与“机构基本资料（LC_InstiArchive）”中的“企业编号（CompanyCode）”关联，得到人员所在机构的基本信息,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,9,Gender,性别,varchar(2),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,10,BirthY,出生年份,varchar(4),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,11,Education,最高学历,varchar(50),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,12,ProfessionalTitle,职称名称,varchar(200),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,13,Tel,电话,varchar(100),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,14,Fax,传真,varchar(100),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,15,Email,邮箱,varchar(200),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,16,Background,简历,text,,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,17,MajorName,专业,varchar(100),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,18,PositionName,职位名称,varchar(200),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,19,Remark,备注,varchar(1000),,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,20,UpdateTime,更新时间,datetime,否,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,21,JSID,JSID,bigint,否,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+人员表,CT_Personal,最后修改日期: 2017-04-19,,,,,,本表收录与证券市场相关人员的基本信息,PersonalNum,不定时更新
+港股证券主表,HK_SecuMain,1,ID,ID,bigint,否,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,2,InnerCode,证券内部编码,int,否,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,3,CompanyCode,公司代码,int,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,4,SecuCode,证券代码,varchar(10),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,5,ChiName,中文名称,varchar(200),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,6,ChiNameAbbr,中文名称缩写,varchar(100),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,7,EngName,英文名称,varchar(200),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,8,EngNameAbbr,英文名称缩写,varchar(50),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,9,SecuAbbr,证券简称,varchar(20),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,10,ChiSpelling,拼音证券简称,varchar(10),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,11,SecuMarket,证券市场,int,,"证券市场(SecuMarket)与(CT_SystemConst)表中的DM字段关联，令LB = 201 AND DM IN (57,66,67,68,72,77,78,84)，得到证券市场的具体描述：57-马来西亚吉隆坡证券交易所，66-泰国证券交易所，67-韩国首尔证券交易所，68-东京证券交易所，72-香港联交所，77-美国纳斯达克证券交易所，78-纽...",本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,12,SecuCategory,证券类别,int,,证券类别(SecuCategory)与(CT_SystemConst)表中的DM字段关联，令LB = 1177，得到证券类别的具体描述：1-A股，2-B股，3-H股，4-大盘，5-国债回购，6-国债现货，7-金融债券，8-开放式基金，9-可转换债券，10-其他，11-企业债券，12-企业债券回购，13-投资基金，14-央行票据，15-深市代理沪市股票，16-...,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,13,ListedDate,上市日期,datetime,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,14,ListedSector,上市板块,int,,上市板块(ListedSector)与(CT_SystemConst)表中的DM字段关联，令LB = 207，得到上市板块的具体描述：1-主板，2-中小企业板，3-三板，4-其他，5-大宗交易系统，6-创业板，101-纳斯达克全球精选市场（NASDAQ-GS），102-纳斯达克全球市场（NASDAQ-GM），103-纳斯达克资本市场（NASDAQ-CM）。,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,15,ListedState,上市状态,int,,"上市状态(ListedState)与(CT_SystemConst)表中的DM字段关联，令LB = 1176 AND DM IN (1,3,5,9)，得到上市状态的具体描述：1-上市，3-暂停，5-终止，9-其他。",本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,16,FormerName,曾用名,varchar(200),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,17,DelistingDate,退市日期,datetime,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,18,TradingUnit,买卖单位(股/手),"decimal(18,4)",,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,19,TraCurrUnit,交易货币单位,int,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,20,ISIN,ISIN代码,varchar(20),,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,21,InsertTime,发布时间,datetime,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,22,XGRQ,更新时间,datetime,否,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,23,JSID,JSID,bigint,否,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+港股证券主表,HK_SecuMain,最后修改日期: 2017-04-19,,,,,,本表收录港股单个证券品种的简称、上市交易所等基础信息。,港股常量表单,日处理，不定时更新
+系统关键词表,CT_Keywords,1,ID,ID,bigint,否,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,2,Type,类别,int,,类别(Type)与(CT_SystemConst)表中的DM字段关联，令LB = 2，得到类别的具体描述：10-内部编码，11-公司代码，205-证券信托公司，206-省市表，301-行业表，311-临时公告关键词，312-非公告关键词，313-法律法规关键词，314-研究报告关键词，315-数据解读关键词，316-专题关键词，320-常规产品分类，321-...,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,3,Content,内容词组,varchar(50),,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,4,Keyword,关键词组,varchar(50),,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,5,Code,代码,int,,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,6,ChiSpelling,关键词拼音简称,varchar(50),,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,7,InfoLevel,级别,tinyint,,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,8,XGRQ,修改日期,datetime,否,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,9,JSID,JSID,bigint,否,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统关键词表,CT_Keywords,最后修改日期: 2017-04-19,,,,,,本表收录证券新闻等中用到的关键词,无,不定时更新
+系统常量表,CT_SystemConst,1,ID,ID,bigint,否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,2,LB,常量分类编码,int,否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,3,LBMC,常量分类名称,varchar(50),否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,4,MS,常量描述,varchar(300),,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,5,DM,常量代码,int,否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,6,CVALUE,字符值,varchar(2000),,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,7,DVALUE,日期值,datetime,,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,8,FVALUE,浮点值,float,,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,9,IVALUE,整型值,int,,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,10,XGRQ,修改日期,datetime,否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,11,JSID,JSID,bigint,否,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+系统常量表,CT_SystemConst,最后修改日期: 2017-04-19,,,,,,本表收录数据库中各种常量值的具体分类和常量名称描述。,"LB,DM",不定时更新
+行业表,CT_Industry,1,ID,ID,bigint,否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,2,IndustryNum,行业编码,int,否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,3,IndustryName,行业名称,varchar(50),否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,4,IndustryCode,行业代码,varchar(20),否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,5,IndustryPlate,行业板块,varchar(20),,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,6,XGRQ,更新时间,datetime,否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,7,JSID,JSID,bigint,否,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+行业表,CT_Industry,最后修改日期: 2017-04-19,,,,,,本表收录行业名称、代码、板块等基本信息。,IndustryNum,不定时更新
+证券主表,SecuMain,1,ID,ID,bigint,否,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,2,InnerCode,证券内部编码,int,否,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,3,CompanyCode,公司代码,int,,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,4,SecuCode,证券代码,varchar(10),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,5,ChiName,中文名称,varchar(200),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,6,ChiNameAbbr,中文名称缩写,varchar(100),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,7,EngName,英文名称,varchar(200),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,8,EngNameAbbr,英文名称缩写,varchar(50),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,9,SecuAbbr,证券简称,varchar(100),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,10,ChiSpelling,拼音证券简称,varchar(50),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,11,SecuMarket,证券市场,int,,证券市场(SecuMarket)与(CT_SystemConst)表中的DM字段关联，令LB = 201，得到证券市场的具体描述：10-上海期货交易所，11-上海国际能源交易中心，12-中国银行间外汇市场，13-大连商品交易所，14-上海黄金交易所，15-郑州商品交易所，49-澳大利亚证券交易所，50-新西兰证券交易所，51-中国金融期货交易所，52-埃及开...,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,12,SecuCategory,证券类别,int,,证券类别(SecuCategory)与(CT_SystemConst)表中的DM字段关联，令LB = 1177，得到证券类别的具体描述：1-A股，2-B股，3-H股，4-大盘，5-国债回购，6-国债现货，7-金融债券，8-开放式基金，9-可转换债券，10-其他，11-企业债券，12-企业债券回购，13-投资基金，14-央行票据，15-深市代理沪市股票，16-...,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,13,ListedDate,上市日期,datetime,,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,14,ListedSector,上市板块,int,,上市板块(ListedSector)与(CT_SystemConst)表中的DM字段关联，令LB = 207，得到上市板块的具体描述：1-主板，2-中小企业板，3-三板，4-其他，5-大宗交易系统，6-创业板，101-纳斯达克全球精选市场（NASDAQ-GS），102-纳斯达克全球市场（NASDAQ-GM），103-纳斯达克资本市场（NASDAQ-CM）。,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,15,ListedState,上市状态,int,,"上市状态(ListedState)与(CT_SystemConst)表中的DM字段关联，令LB = 1176 AND DM IN (1,3,5,9)，得到上市状态的具体描述：1-上市，3-暂停，5-终止，9-其他。",本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,16,ISIN,ISIN代码,varchar(20),,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,17,XGRQ,更新时间,datetime,否,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,18,JSID,JSID,bigint,否,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新
+证券主表,SecuMain,最后修改日期: 2017-04-19,,,,,,本表收录单个证券品种（股票、基金、债券）的代码、简称、上市交易所等基础信息。,InnerCode,日处理，不定时更新

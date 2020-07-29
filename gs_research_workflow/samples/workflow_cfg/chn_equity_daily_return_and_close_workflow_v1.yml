@@ -1,0 +1,111 @@
+- gs_research_workflow.time_series.gs_steps.tf_train_steps:TFTrainStep:
+    '#checkpoint_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:ModelCheckPointStep:
+        save_best_only: true
+        save_weights_only: false
+        verbose: 1
+    '#compile_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:CompileStep:
+        loss: mae_align_to_y_true
+        optimizer: Adam
+        str_metrics:
+        - mae_align_to_y_true
+        - mse_align_to_y_true
+    '#early_stopping_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:EarlyStoppingStep:
+        monitor: val_loss
+        patience: 3
+    '#fit_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:FitStep:
+        epochs: 3
+        steps_per_epoch: 4000
+        validation_steps: 200
+    '#model_cls,model_init_hp#':
+      PROPERTIES: model_cls,model_init_hp
+      gs_research_workflow.time_series.gs_steps.model_steps:TFModelStep:
+        model_cls_str: gs_research_workflow.time_series.models.ts_bert:TSBertForMaskedCS
+        model_hp:
+          gs_research_workflow.time_series.models.ts_bert:TSBertForMaskedCS.HP:
+            hidden_size: 648
+            max_position_embeddings: 31
+            name: chn_equity_daily_return_and_close
+            num_attention_heads: 12
+            type_vocab_size: 21
+    '#tensor_board_kwargs#':
+      PROPERTIES: out_kwargs
+      gs_research_workflow.time_series.gs_steps.model_steps:TensorBoardStep:
+        write_graph: false
+    '#test_ds#':
+      PROPERTIES: tf_ds
+      RULE: test_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:EquityPoolTSDatasetStep:
+        '#df_i_by_t#':
+          PROPERTIES: eval_items
+          RULE: evaluate
+          gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:IByTGeneratorStep:
+            end_t: 2019-12-31
+            evaluate_items_count: 30
+            ls_i_by_condition:
+            - &id001 !!python/tuple
+              - low_pe
+              - pe > 3.0 and pe < 8.0
+            - &id002 !!python/tuple
+              - mid_pe
+              - pe > 15.0 and pe < 30.0
+            - &id003 !!python/tuple
+              - high_pe
+              - pe > 30.0 and pe < 80.0
+            sample_freq: m
+            start_t: 2019-01-01
+            train_val_split_ratio: 0.95
+            use_concept_blocks: true
+        ds_pip: 'lambda ds: ds.batch(5)'
+        i_end_t: 2019-12-31
+        i_start_t: 2019-01-01
+    '#train_ds#':
+      PROPERTIES: tf_ds
+      RULE: train_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:EquityPoolTSDatasetStep:
+        '#df_i_by_t#':
+          PROPERTIES: train_items
+          RULE: train
+          gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:IByTGeneratorStep:
+            end_t: 2019-12-31
+            evaluate_items_count: 30
+            ls_i_by_condition:
+            - *id001
+            - *id002
+            - *id003
+            sample_freq: m
+            start_t: 2019-01-01
+            train_val_split_ratio: 0.95
+            use_concept_blocks: true
+        ds_pip: 'lambda ds: ds.repeat().batch(5)'
+        i_end_t: 2019-12-31
+        i_start_t: 2019-01-01
+    '#val_ds#':
+      PROPERTIES: tf_ds
+      RULE: val_ds
+      gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:EquityPoolTSDatasetStep:
+        '#df_i_by_t#':
+          PROPERTIES: val_items
+          RULE: validation
+          gs_research_workflow.time_series.gs_steps.tf_dataset_steps.equity_daily_data_mask_ds:IByTGeneratorStep:
+            end_t: 2019-12-31
+            evaluate_items_count: 30
+            ls_i_by_condition:
+            - *id001
+            - *id002
+            - *id003
+            sample_freq: m
+            start_t: 2019-01-01
+            train_val_split_ratio: 0.95
+            use_concept_blocks: true
+        ds_pip: 'lambda ds: ds.repeat().batch(5)'
+        i_end_t: 2019-12-31
+        i_start_t: 2019-01-01
+- CONTEXT: null
