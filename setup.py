@@ -15,7 +15,7 @@ setup(name='gs-research-workflow',
             'pymongo',
             'numpy',
             'pandas',
-            'tensorflow==2.0.0',
+            'tensorflow==2.11.1',
             # "tf-nightly",
             # 'tf-nightly-2.0-preview',
             # "tf-nightly-gpu-2.0-preview", # 似乎不能用 gpu 版本的 tf-nightly
